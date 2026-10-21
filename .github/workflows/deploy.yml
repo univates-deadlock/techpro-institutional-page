@@ -18,37 +18,111 @@ jobs:
     name: Deploy to Univates VM
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
 
     steps:
-      - name: Configure SSH
+      - name: Show runner diagnostics
+        run: |
+          set -Eeuo pipefail
+          ssh -V
+          printf 'Runner public IPv4: '
+          curl -4fsS --connect-timeout 5 --max-time 10 https://api.ipify.org || printf 'unavailable'
+          echo
+
+      - name: Validate SSH configuration
         env:
+          VM_HOST: ${{ secrets.VM_HOST }}
+          VM_USER: ${{ secrets.VM_USER }}
+          VM_PORT: ${{ secrets.VM_PORT }}
           SSH_KEY: ${{ secrets.VM_SSH_KEY }}
           KNOWN_HOSTS: ${{ secrets.VM_KNOWN_HOSTS }}
         run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
+          set -Eeuo pipefail
 
-          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          [[ -n "$VM_HOST" ]] || { echo '::error::VM_HOST is missing'; exit 1; }
+          [[ -n "$VM_USER" ]] || { echo '::error::VM_USER is missing'; exit 1; }
+          [[ -n "$SSH_KEY" ]] || { echo '::error::VM_SSH_KEY is missing'; exit 1; }
+          [[ -n "$KNOWN_HOSTS" ]] || { echo '::error::VM_KNOWN_HOSTS is missing'; exit 1; }
 
-          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
+          port="${VM_PORT:-22}"
+          if [[ ! "$port" =~ ^[0-9]+$ ]] || (( port < 1 || port > 65535 )); then
+            echo '::error::VM_PORT must be a valid TCP port'
+            exit 1
+          fi
 
-      
-      - name: Deploy application
+          umask 077
+          mkdir -p "$HOME/.ssh"
+          printf '%s\n' "$SSH_KEY" | tr -d '\r' > "$HOME/.ssh/id_ed25519"
+          printf '%s\n' "$KNOWN_HOSTS" | tr -d '\r' > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/id_ed25519" "$HOME/.ssh/known_hosts"
+
+          ssh-keygen -y -f "$HOME/.ssh/id_ed25519" > /dev/null || {
+            echo '::error::VM_SSH_KEY is not a usable private key'
+            exit 1
+          }
+
+          host_lookup="$VM_HOST"
+          if [[ "$port" != 22 ]]; then
+            host_lookup="[$VM_HOST]:$port"
+          fi
+          ssh-keygen -F "$host_lookup" -f "$HOME/.ssh/known_hosts" > /dev/null || {
+            echo '::error::VM_KNOWN_HOSTS has no entry for VM_HOST and VM_PORT'
+            exit 1
+          }
+          echo 'SSH key is valid and a matching known_hosts entry exists.'
+
+      - name: Connect and deploy (verbose SSH diagnostics)
         env:
           VM_HOST: ${{ secrets.VM_HOST }}
           VM_USER: ${{ secrets.VM_USER }}
           VM_PORT: ${{ secrets.VM_PORT }}
         run: |
-          ssh \
+          set -Eeuo pipefail
+          ssh -vvv \
+            -i "$HOME/.ssh/id_ed25519" \
+            -o IdentitiesOnly=yes \
             -o BatchMode=yes \
+            -o PreferredAuthentications=publickey \
             -o StrictHostKeyChecking=yes \
-            -o ConnectTimeout=10 \
+            -o UserKnownHostsFile="$HOME/.ssh/known_hosts" \
+            -o ConnectTimeout=20 \
+            -o ConnectionAttempts=1 \
             -p "${VM_PORT:-22}" \
-            "${VM_USER}@${VM_HOST}" \
-            'set -e
-             cd "$HOME/techpro-web-landing-page"
-             git pull --ff-only origin main
-             sudo -n docker compose up -d --build
-             sudo -n docker compose ps'
+            "${VM_USER}@${VM_HOST}" 'bash -se' <<'REMOTE'
+          set -Eeuo pipefail
+
+          report_failure() {
+            local exit_code=$?
+            echo "::error::Remote deployment failed (exit code: $exit_code)"
+            if [[ -f compose.yaml ]]; then
+              sudo -n docker compose ps || true
+              sudo -n docker compose logs --no-color --tail 60 web || true
+            fi
+            exit "$exit_code"
+          }
+          trap report_failure ERR
+
+          echo '========== REMOTE: connection authenticated =========='
+          echo "Remote user: $(whoami)"
+          echo "Remote directory: $HOME/techpro-web-landing-page"
+          cd "$HOME/techpro-web-landing-page"
+          test -f compose.yaml
+          command -v git
+          command -v docker
+          sudo -n docker compose version
+
+          echo '========== REMOTE: Git update =========='
+          git status --short
+          git pull --ff-only origin main
+          echo "Current commit: $(git rev-parse --short HEAD)"
+
+          echo '========== REMOTE: Docker deployment =========='
+          sudo -n docker compose config --quiet
+          sudo -n docker compose up -d --build
+          sudo -n docker compose ps
+
+          echo '========== REMOTE: HTTP health check =========='
+          curl -fsS --retry 5 --retry-delay 2 --retry-connrefused --max-time 10 \
+            -o /dev/null -w 'HTTP status: %{http_code}\n' \
