@@ -126,3 +126,7 @@ jobs:
           echo '========== REMOTE: HTTP health check =========='
           curl -fsS --retry 5 --retry-delay 2 --retry-connrefused --max-time 10 \
             -o /dev/null -w 'HTTP status: %{http_code}\n' \
+            http://127.0.0.1:8080/pages/home.html
+
+          echo '========== DEPLOY COMPLETED SUCCESSFULLY =========='
+          REMOTE
