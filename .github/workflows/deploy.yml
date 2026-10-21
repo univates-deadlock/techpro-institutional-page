@@ -1,0 +1,54 @@
+name: Deploy TechPro Institutional Page
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: techpro-web-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Univates VM
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.VM_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      
+      - name: Deploy application
+        env:
+          VM_HOST: ${{ secrets.VM_HOST }}
+          VM_USER: ${{ secrets.VM_USER }}
+          VM_PORT: ${{ secrets.VM_PORT }}
+        run: |
+          ssh \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            -o ConnectTimeout=10 \
+            -p "${VM_PORT:-22}" \
+            "${VM_USER}@${VM_HOST}" \
+            'set -e
+             cd "$HOME/techpro-web-landing-page"
+             git pull --ff-only origin main
+             sudo -n docker compose up -d --build
+             sudo -n docker compose ps'
