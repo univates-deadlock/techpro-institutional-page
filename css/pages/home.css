@@ -1,25 +1,16 @@
 /* ==========================================================================
    Home Page Styles
    ========================================================================== */
-    body.home-page .container {
-        width: 100%;
-        max-width: var(--container-max-width, 1440px);
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: var(--page-padding-lg, 120px);
-        padding-right: var(--page-padding-lg, 120px);
-        box-sizing: border-box;
-    }
 
 /* ==========================================================================
    Hero Section
    ========================================================================== */
-   body.home-page .hero {
+body.home-page .hero {
     position: relative;
     padding: var(--spacing-3xl) 0;
     background: url("/assets/images/home/hero.jpg") no-repeat center center;
     background-size: cover;
-    min-height: 450px;
+    min-height: 420px;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -43,8 +34,8 @@ body.home-page .hero__content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacing-lg);
-    max-width: 888px;
+    gap: var(--spacing-md);
+    max-width: 900px;
 }
 
 body.home-page .hero__eyebrow {
@@ -79,7 +70,7 @@ body.home-page .hero__message {
     line-height: var(--line-height-normal);
     color: var(--color-neutral-200);
     margin: 0;
-    max-width: 700px;
+    max-width: 720px;
 }
 
 body.home-page .hero__actions {
@@ -377,12 +368,65 @@ body.home-page .services__link {
   }
 }
 
-@media (max-width: 768px) {
-  body.home-page .hero__title,
+@media (max-width: 890px) {
+  body.home-page .hero {
+    min-height: 360px;
+    padding: var(--spacing-3xl) 0;
+  }
+
+  .audience,
+  body.home-page .services,
+  .differentials {
+    padding: var(--spacing-3xl) 0;
+  }
+
+  body.home-page .hero__title {
+    font-size: var(--font-size-5xl);
+  }
+
+  body.home-page .hero__message {
+    font-size: var(--font-size-lg);
+  }
+
+  .audience__title,
+  body.home-page .services__title,
+  .differentials__title {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+@media (max-width: 600px) {
+  body.home-page .hero {
+    min-height: 280px;
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .audience,
+  body.home-page .services,
+  .differentials {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  body.home-page .hero__eyebrow,
+  body.home-page .audience__eyebrow,
+  body.home-page .services__eyebrow {
+    font-size: var(--font-size-md);
+    letter-spacing: var(--letter-spacing-medium);
+  }
+
+  body.home-page .hero__title {
+    font-size: var(--font-size-4xl);
+  }
+
   .audience__title,
   body.home-page .services__title,
   .differentials__title {
     font-size: var(--font-size-3xl);
+  }
+
+  body.home-page .hero__message,
+  .audience__message {
+    font-size: var(--font-size-md);
   }
 
   .audience__grid,

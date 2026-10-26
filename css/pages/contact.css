@@ -7,7 +7,6 @@
    ========================================================================== */
 /* Padding and width on large screens */
 .location,
-.hero,
 .form,
 .principal {
   padding: 50px var(--page-padding-lg);
@@ -28,15 +27,19 @@
    Hero Section
    ========================================================================== */
 /* Hero banner with full-bleed background cover image */
-.hero {
+body.contact-page .hero {
   position: relative;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-3xl) var(--page-padding-lg);
   background: url("/assets/images/contact/hero.png") no-repeat center center;
   background-size: cover;
   width: 100%;
 }
 
 /* Gradient layer */
-.hero::before {
+body.contact-page .hero::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -44,32 +47,36 @@
   z-index: 1;
 }
 
-.hero__container {
+body.contact-page .hero__container {
   position: relative;
   z-index: 2;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--spacing-md);
-  margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-5xl);
+  margin: 0;
 }
 
 /* Hero texts */
-.hero__subtitle {
-  color: var(--color-neutral-white);
+body.contact-page .hero__subtitle {
+  color: var(--color-emphasis-text);
   font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-7xl);
+  font-size: var(--font-size-6xl);
   line-height: var(--line-height-tight);
+  max-width: 900px;
 }
 
-.hero__message {
-  color: var(--color-text-muted);
+body.contact-page .hero__message {
+  color: var(--color-neutral-200);
   font-weight: var(--font-weight-light);
   font-size: var(--font-size-xl);
+  line-height: var(--line-height-normal);
+  max-width: 720px;
 }
 
-.hero__title,
-.hero__subtitle {
+body.contact-page .hero__title,
+body.contact-page .hero__subtitle {
   margin: 0;
 }
 
@@ -300,8 +307,18 @@
 /* ==========================================================================
    Responsiveness
    ========================================================================== */
-/* Laptops & Smaller Desktops (<= 1200px) */
-@media (max-width: 1200px) {
+/* Laptops & Smaller Desktops (<= 1280px) */
+@media (max-width: 1280px) {
+  body.contact-page .hero {
+    padding: var(--spacing-3xl);
+  }
+
+  .location,
+  .form,
+  .principal {
+    padding: 50px var(--spacing-3xl);
+  }
+
   /* Transition contact channels grid to 2 columns */
   .principal {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -323,34 +340,65 @@
 
 /* Tablets & Medium Screens (<= 890px) */
 @media (max-width: 890px) {
-  /* Reduce horizontal margins */
-  .location,
-  .hero,
-  .form,
-  .principal {
-    padding: 50px var(--page-padding-md);
+  body.contact-page .hero {
+    min-height: 360px;
+    padding: var(--spacing-3xl) var(--page-padding-md);
   }
 
-  /* Scale down large subtitles on tablets */
+  /* Reduce horizontal and vertical padding */
+  .location,
+  .form,
+  .principal {
+    padding: var(--spacing-3xl) var(--page-padding-md);
+  }
+
+  /* Scale down large titles on tablets */
+  body.contact-page .hero__subtitle,
   .form__subtitle,
   .location__subtitle {
-    font-size: var(--font-size-6xl);
+    font-size: var(--font-size-5xl);
+  }
+
+  body.contact-page .hero__message {
+    font-size: var(--font-size-lg);
   }
 }
 
 /* Mobile Devices & Small Screens (<= 600px) */
 @media (max-width: 600px) {
-  /* Compact horizontal padding for mobile */
+  body.contact-page .hero {
+    min-height: 280px;
+    padding: var(--spacing-2xl) var(--page-padding-sm);
+  }
+
+  /* Compact padding for mobile */
   .location,
-  .hero,
   .form,
   .principal {
-    padding: 50px var(--page-padding-sm);
+    padding: var(--spacing-2xl) var(--page-padding-sm);
+  }
+
+  body.contact-page .hero__subtitle,
+  .form__subtitle,
+  .location__subtitle {
+    font-size: var(--font-size-4xl);
+  }
+
+  body.contact-page .hero__message,
+  .form__message {
+    font-size: var(--font-size-md);
+  }
+
+  .form__button-whatsapp {
+    width: 100%;
+    max-width: none;
+    font-size: var(--font-size-lg);
   }
 
   /* Single column contact cards on mobile */
   .principal {
     grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-md);
   }
 
   /* Single column for form fields on mobile */
@@ -359,12 +407,15 @@
   }
 
   .form__form {
-    padding: 24px 20px;
+    padding: var(--spacing-lg) var(--spacing-md);
   }
 
-  /* Scale down large subtitles on mobile */
-  .form__subtitle,
-  .location__subtitle {
-    font-size: var(--font-size-5xl);
+  .location__iframe-container {
+    padding: 0;
+  }
+
+  .location__iframe {
+    height: 300px;
+    border-radius: var(--radius-xl);
   }
 }

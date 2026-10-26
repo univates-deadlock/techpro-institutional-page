@@ -84,16 +84,15 @@ industry-service-card {
   text-align: center;
 }
 
-/* Customers page: fixed-height service photos and lighter captions */
+/* Customers page: service photos and lighter captions */
 .image-card--featured {
   width: 100%;
-  max-width: 519px;
   height: 100%;
   background: var(--color-neutral-300);
 }
 
 .image-card--featured .image-card__image {
-  height: 396px;
+  aspect-ratio: 519 / 396;
   flex-grow: 1;
   background: var(--color-background);
 }
@@ -144,16 +143,4 @@ industry-service-card {
   font-size: clamp(16px, 1.5vw, 20px);
   font-weight: var(--font-weight-regular);
   line-height: 1.2;
-}
-
-/* Keep featured cards inside narrower grid tracks. */
-@media (max-width: 1700px) {
-  .image-card--featured {
-    width: 100%;
-  }
-
-  .image-card--featured .image-card__image {
-    height: auto;
-    aspect-ratio: 519 / 396;
-  }
 }
