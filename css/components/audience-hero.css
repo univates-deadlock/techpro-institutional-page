@@ -10,10 +10,10 @@ audience-hero {
 
 .audience-hero__section {
   position: relative;
-  min-height: 577px;
+  min-height: 420px;
   display: flex;
-  align-items: flex-start;
-  padding: 30px 0 0;
+  align-items: center;
+  padding: var(--spacing-3xl) 0;
   overflow: hidden;
 }
 
@@ -41,41 +41,44 @@ audience-hero {
 
 .audience-hero__content {
   position: relative;
-  max-width: 889px;
-  margin-left: 5px;
-  padding-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  max-width: 900px;
   text-align: left;
 }
 
 .audience-hero__eyebrow {
   display: block;
-  margin-bottom: var(--spacing-sm);
+  margin: 0;
   color: var(--color-primary);
   font-family: var(--font-family-primary);
-  font-size: clamp(14px, 1.25vw, 24px);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-regular);
   letter-spacing: var(--letter-spacing-wide);
-  line-height: 1.2;
+  line-height: var(--line-height-normal);
   text-transform: uppercase;
 }
 
 .audience-hero__title {
-  margin: 0 0 20px;
-  color: var(--color-hero-text);
+  max-width: 900px;
+  margin: 0;
+  color: var(--color-emphasis-text);
   font-family: var(--font-family-primary);
-  font-size: clamp(36px, 5vw, 75px);
+  font-size: var(--font-size-6xl);
   font-weight: var(--font-weight-semibold);
-  line-height: 109.74%;
+  line-height: var(--line-height-tight);
 }
 
 .audience-hero__description {
-  max-width: 889px;
+  max-width: 720px;
   margin: 0;
-  color: #dedede;
+  color: var(--color-neutral-200);
   font-family: var(--font-family-primary);
-  font-size: clamp(16px, 1.6vw, 24px);
-  font-weight: var(--font-weight-regular);
-  line-height: 1.3;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-normal);
 }
 
 /* Customers variation: dark gradient and handshake image */
@@ -92,20 +95,6 @@ audience-hero {
   background: url("/assets/images/customers/hero.jpg") center / cover no-repeat;
 }
 
-.audience-hero--customers .audience-hero__container {
-  padding-right: 120px;
-  padding-left: 120px;
-}
-
-.audience-hero--customers .audience-hero__eyebrow {
-  margin-bottom: 24px;
-}
-
-.audience-hero--customers .audience-hero__title,
-.audience-hero--customers .audience-hero__description {
-  margin-left: -5px;
-}
-
 /* Industry variation: industrial background image */
 .audience-hero--industry .audience-hero__image {
   background: url("/assets/images/services/hero.png") center / cover no-repeat;
@@ -114,64 +103,37 @@ audience-hero {
 /* ==========================================================================
    Responsive Layout
    ========================================================================== */
-@media (min-width: 1920px) {
-  .audience-hero--industry .audience-hero__content {
-    max-width: 1600px;
-    margin-right: auto;
-    margin-left: auto;
-  }
-}
-
-@media (max-width: 1280px) {
-  .audience-hero--customers .audience-hero__section {
-    min-height: auto;
-    padding: 100px 0 60px;
-  }
-
-  .audience-hero--customers .audience-hero__container {
-    padding-right: 60px;
-    padding-left: 60px;
-  }
-
-  .audience-hero--industry .audience-hero__section {
-    min-height: 577px;
-    align-items: center;
-    padding: 140px var(--page-padding-lg) 80px;
-  }
-
-  .audience-hero--industry .audience-hero__content {
-    padding-top: 0;
-  }
-}
-
 @media (max-width: 890px) {
-  .audience-hero--customers .audience-hero__section {
-    padding: 80px 0 40px;
+  .audience-hero__section {
+    min-height: 360px;
+    padding: var(--spacing-3xl) 0;
   }
 
-  .audience-hero--industry .audience-hero__section {
-    min-height: auto;
-    padding: 140px var(--page-padding-md) 60px;
+  .audience-hero__title {
+    font-size: var(--font-size-5xl);
+  }
+
+  .audience-hero__description {
+    font-size: var(--font-size-lg);
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 600px) {
+  .audience-hero__section {
+    min-height: 280px;
+    padding: var(--spacing-2xl) 0;
+  }
+
   .audience-hero__eyebrow {
+    font-size: var(--font-size-md);
     letter-spacing: var(--letter-spacing-medium);
   }
 
-  .audience-hero--customers .audience-hero__container {
-    padding-right: 20px;
-    padding-left: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .audience-hero--customers .audience-hero__section {
-    padding: 80px 0 30px;
+  .audience-hero__title {
+    font-size: var(--font-size-4xl);
   }
 
-  .audience-hero--industry .audience-hero__section {
-    padding: 120px var(--page-padding-sm) 40px;
+  .audience-hero__description {
+    font-size: var(--font-size-md);
   }
 }
