@@ -10,21 +10,13 @@
 .applications > .customers-container,
 .featured-services > .customers-container {
   width: 100%;
-  max-width: 1624px;
-  margin: 0 auto;
-  padding: 0 100px;
+  padding: 0 var(--page-padding-lg);
   box-sizing: border-box;
 }
 
-   .customer-types {
-  padding: var(--spacing-4xl) 0;
+.customer-types {
+  padding: var(--spacing-3xl) 0;
   background-color: var(--color-background);
-}
-
-.customer-types > .customers-container {
-  width: 100%;
-  padding: 0 100px;
-  box-sizing: border-box;
 }
 
 .customer-types__grid {
@@ -41,7 +33,7 @@
    Product Applications
    ========================================================================== */
 .applications {
-  padding: var(--spacing-4xl) 0;
+  padding: var(--spacing-3xl) 0;
   background-color: var(--color-neutral-100);
 }
 
@@ -205,14 +197,8 @@
    Featured Services
    ========================================================================== */
 .featured-services {
-  padding: var(--spacing-4xl) 0;
+  padding: var(--spacing-3xl) 0;
   background-color: var(--color-background);
-}
-
-.featured-services > .customers-container {
-  width: 100%;
-  padding: 0 100px;
-  box-sizing: border-box;
 }
 
 .featured-services__title {
@@ -221,44 +207,33 @@
   font-size: var(--font-size-5xl);
   line-height: var(--line-height-tight);
   color: var(--color-text-main);
-  margin: 0 auto var(--spacing-2xl);
-  max-width: 1624px;
+  margin: 0 0 var(--spacing-2xl);
 }
 
 .featured-services__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 519px));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-auto-rows: 1fr;
   gap: var(--spacing-xl);
-  row-gap: 14px;
   width: 100%;
-  max-width: 1624px;
-  margin: 0 auto;
-  justify-content: center;
 }
 
 
 /* ==========================================================================
    Responsive Layout
    ========================================================================== */
-@media (max-width: 1700px) {
-  .featured-services__grid,
-  .customer-types__grid {
-    justify-content: center;
-  }
-}
-
 @media (max-width: 1280px) {
   /* Switch both card grids to two columns. */
   .customer-types > .customers-container,
+  .applications > .customers-container,
   .featured-services > .customers-container {
-    padding: 0 60px;
+    padding: 0 var(--spacing-3xl);
   }
 
   .customer-types__grid,
   .featured-services__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
+    gap: var(--spacing-lg);
   }
 
   .customer-card,
@@ -276,17 +251,18 @@
   .customer-types,
   .applications,
   .featured-services {
-    padding: 60px 0 80px;
+    padding: var(--spacing-3xl) 0;
   }
 
-  .applications > .customers-container {
-    padding-right: var(--page-padding-md);
-    padding-left: var(--page-padding-md);
+  .customer-types > .customers-container,
+  .applications > .customers-container,
+  .featured-services > .customers-container {
+    padding: 0 var(--page-padding-md);
   }
 
   .applications__title,
   .featured-services__title {
-    font-size: 42px;
+    font-size: var(--font-size-4xl);
   }
 
   .customer-types__grid,
@@ -303,40 +279,41 @@
   .applications-table th,
   .applications-table td {
     padding: 12px 14px;
-    font-size: 14px;
+    font-size: var(--font-size-sm);
   }
 }
 
-@media (max-width: 680px) {
-  .applications > .customers-container {
-    padding-right: var(--page-padding-sm);
-    padding-left: var(--page-padding-sm);
+@media (max-width: 600px) {
+  .customer-types,
+  .applications,
+  .featured-services {
+    padding: var(--spacing-2xl) 0;
   }
 
   .customer-types > .customers-container,
+  .applications > .customers-container,
   .featured-services > .customers-container {
-    padding: 0 20px;
+    padding: 0 var(--page-padding-sm);
   }
 
   .applications__eyebrow {
-    letter-spacing: 0.1em;
+    font-size: var(--font-size-md);
+    letter-spacing: var(--letter-spacing-medium);
+  }
+
+  .applications__title,
+  .featured-services__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .applications__description {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-lg);
   }
 
   .applications-table th,
   .applications-table td {
     padding: 10px 12px;
-    font-size: 12px;
-  }
-
-  .customer-card__title {
-    font-size: 28px;
-  }
-}
-
-@media (max-width: 480px) {
-  .customer-types,
-  .applications,
-  .featured-services {
-    padding: 40px 0 60px;
+    font-size: var(--font-size-xs);
   }
 }
