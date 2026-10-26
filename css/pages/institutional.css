@@ -8,7 +8,7 @@
     background: url("/assets/images/institutional/hero.png") no-repeat center center;
     background-size: cover;
     width: 100%;
-    padding: 100px 0 90px 0;
+    padding: var(--spacing-4xl) 0 var(--spacing-3xl) 0;
 }
 
 /* Gradient layer */
@@ -56,7 +56,6 @@
       font-weight: var(--font-weight-semibold);
       line-height: var(--line-height-tight);
       color: var(--color-text-main);
-      line-height: var(--line-height-tight);
       margin: var(--spacing-xs) 0 var(--spacing-xl) 0;
     }
 
@@ -74,8 +73,8 @@
 .stats-institutional {
   background: linear-gradient(
     90deg,
-    #0E1930 0%,
-    #00325F 100%
+    var(--color-navy-900) 0%,
+    var(--color-blue-900) 100%
   );
   padding: var(--spacing-3xl) 0;
   color: var(--color-emphasis-text);
@@ -119,7 +118,7 @@
     =================================================================*/
 
 .purpose-institutional {
-  background-color: #EDF2F8;
+  background-color: var(--color-neutral-100);
   padding: var(--spacing-4xl) 0;
 }
 
@@ -141,10 +140,10 @@
 }
 
 .purpose-institutional__card {
-    background-color: #ffffff;
-    border-radius: 16px;
+    background-color: var(--color-neutral-white);
+    border-radius: var(--radius-lg);
     padding: var(--spacing-xl);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
     flex: 1;
 }
 
@@ -152,8 +151,8 @@
     margin-top: 0;
     margin-bottom: var(--spacing-xs);
     font-size: var(--font-size-5xl);
-    font-weight: var(--font-weight-semibold);
-    color: #05517E;   
+    font-weight: var(--font-weight-medium);
+    color: var(--color-blue-900);  
 }
 
 .purpose-institutional__text {
@@ -174,7 +173,6 @@
 
 .quote-institutional__wrapper {
     display: flex;
-    grid-template-columns: 1fr 1fr;
     gap: var(--spacing-2xl);
     align-items: center;
 }
@@ -194,8 +192,12 @@
 
 .quote-institutional__card {
     flex: 1;
-    background: linear-gradient(135deg, #021B33 0%, #053D66 100%);
-    border-radius: 16px;
+    background: linear-gradient(
+      135deg,
+      var(--color-navy-900) 0%,
+      var(--color-blue-900) 100%
+    );
+    border-radius: var(--radius-lg);
     padding: var(--spacing-2xl);
     margin: 0;
     display: flex;
@@ -213,7 +215,7 @@
 }
 
 .quote-institutional__text {
-  color: var(--color-emphasis-text, #ffffff);
+  color: var(--color-emphasis-text);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-relaxed);
@@ -225,7 +227,7 @@
     =================================================================*/
 
 .cta-institutional {
-  background-color: var(--color-background-alt, #edf2f8);
+  background-color: var(--color-neutral-100);
   padding: var(--spacing-4xl) 0;
 }
 
@@ -251,20 +253,20 @@
 
 .cta-institutional .btn--outline {
   background-color: transparent;
-  border: 1px solid var(--color-border-dark, #333333);
-  color: var(--color-text-main, #000000);
+  border: 1px solid var(--color-neutral-800);
+  color: var(--color-text-main);
   padding: var(--spacing-sm) var(--spacing-xl);
-  border-radius: var(--radius-md, 8px);
+  border-radius: var(--radius-sm);
   font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
 
 .cta-institutional .btn--primary {
-  background-color: var(--color-brand-green, #10b981);
+  background-color: var(--color-primary);
   border: none;
-  color: #ffffff;
+  color: var(--color-emphasis-text);
   padding: var(--spacing-sm) var(--spacing-xl);
-  border-radius: var(--radius-md, 8px);
+  border-radius: var(--radius-sm);
   font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
@@ -285,12 +287,12 @@
     grid-template-columns: 1fr;
   }
 
-  .essence-institutional__grid {
+  .purpose-institutional__grid {
     grid-template-columns: 1fr;
   }
 
   .quote-institutional__wrapper {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     gap: var(--spacing-xl);
   }
 
