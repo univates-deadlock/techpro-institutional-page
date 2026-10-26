@@ -14,13 +14,13 @@ class SiteHeader extends HTMLElement {
           </a>
 
           <!-- Main Navigation Menu -->
-          <div class="header__menu-wrapper">
+          <div class="header__menu-wrapper" id="header-menu">
             <nav class="header__nav" aria-label="Navegação principal">
               <!-- Close Button inside Sidebar -->
-              <button class="header__close-btn" aria-label="Fechar menu">
+              <button class="header__close-btn" type="button" aria-label="Fechar menu">
                 <img
                   src="/assets/icons/blue-x.svg"
-                  alt="Fechar menu"
+                  alt=""
                   class="header__close-icon"
                 />
               </button>
@@ -53,10 +53,16 @@ class SiteHeader extends HTMLElement {
           </div>
 
           <!-- Hamburger Button for smaller screens -->
-          <button class="header__hamburguer" aria-label="Abrir menu">
+          <button
+            class="header__hamburguer"
+            type="button"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="header-menu"
+          >
             <img
               src="/assets/icons/blue-hamburguer.svg"
-              alt="Ícone de menu"
+              alt=""
               class="header__hamburguer-icon"
             />
           </button>
@@ -69,20 +75,33 @@ class SiteHeader extends HTMLElement {
     const menuWrapper = this.querySelector(".header__menu-wrapper");
     const closeBtn = this.querySelector(".header__close-btn");
 
+    const setMenuOpen = (isOpen) => {
+      menuWrapper.classList.toggle("is-open", isOpen);
+      hamburguerBtn.setAttribute("aria-expanded", String(isOpen));
+    };
+
     // Open sidebar on hamburger click
     hamburguerBtn.addEventListener("click", () => {
-      menuWrapper.classList.add("is-open");
+      setMenuOpen(true);
     });
 
     // Close sidebar on 'X' button click
     closeBtn.addEventListener("click", () => {
-      menuWrapper.classList.remove("is-open");
+      setMenuOpen(false);
     });
 
     // Close sidebar when clicking outside (on the dark backdrop overlay)
     menuWrapper.addEventListener("click", (event) => {
       if (event.target === menuWrapper) {
-        menuWrapper.classList.remove("is-open");
+        setMenuOpen(false);
+      }
+    });
+
+    // Close sidebar on Escape key
+    this.ownerDocument.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menuWrapper.classList.contains("is-open")) {
+        setMenuOpen(false);
+        hamburguerBtn.focus();
       }
     });
   }
