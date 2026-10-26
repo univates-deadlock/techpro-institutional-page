@@ -6,10 +6,10 @@ class SiteFooter extends HTMLElement {
 
           <!-- Newsletter Form -->
           <form class="footer__form" id="newsletter-form">
-            <div class="footer__email-wrapper">
+            <div class="footer__email-wrapper" aria-hidden="true">
               <img
                 src="/assets/icons/white-mail.svg"
-                alt="Ícone de e-mail"
+                alt=""
                 class="footer__mail"
               />
             </div>
@@ -22,6 +22,7 @@ class SiteFooter extends HTMLElement {
                   type="text"
                   name="name"
                   placeholder="Seu nome"
+                  aria-label="Seu nome"
                   required
                 />
                 <input
@@ -29,6 +30,7 @@ class SiteFooter extends HTMLElement {
                   type="email"
                   name="email"
                   placeholder="Seu e-mail"
+                  aria-label="Seu e-mail"
                   required
                 />
                 <button
@@ -45,7 +47,7 @@ class SiteFooter extends HTMLElement {
           <div class="footer__info">
 
             <!-- Institutional Links -->
-            <nav class="footer__info-section">
+            <nav class="footer__info-section" aria-label="Institucional">
               <h3 class="footer__info-section-subtitle">Institucional</h3>
               <a class="footer__info-section-text" href="/pages/institutional.html">Sobre a TechPro</a>
               <a class="footer__info-section-text" href="/pages/institutional.html">Quem somos</a>
@@ -69,7 +71,7 @@ class SiteFooter extends HTMLElement {
             </div>
 
             <!-- Usage Policies -->
-            <nav class="footer__info-section">
+            <nav class="footer__info-section" aria-label="Políticas de uso">
               <h3 class="footer__info-section-subtitle">Políticas de uso</h3>
               <a class="footer__info-section-text" href="/pages/not_implemented.html">Termos de uso</a>
               <a class="footer__info-section-text" href="/pages/not_implemented.html">Política de entrega</a>
@@ -78,7 +80,7 @@ class SiteFooter extends HTMLElement {
             </nav>
 
             <!-- Social Media & Contact Channels -->
-            <nav class="footer__info-section">
+            <nav class="footer__info-section" aria-label="Canais de comunicação">
               <h3 class="footer__info-section-subtitle">Canais de comunicação</h3>
               <a
                 class="footer__info-section-text"
