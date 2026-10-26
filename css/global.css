@@ -82,9 +82,17 @@ svg {
 }
 
 .container {
+  width: 100%;
   margin: 0 auto;
   padding-left: var(--page-padding-lg);
   padding-right: var(--page-padding-lg);
+}
+
+@media (max-width: 1280px) {
+  .container {
+    padding-left: var(--spacing-3xl);
+    padding-right: var(--spacing-3xl);
+  }
 }
 
 @media (max-width: 890px) {
@@ -122,4 +130,11 @@ button {
   font-weight: var(--font-weight-regular);
   letter-spacing: var(--letter-spacing-wide);
   margin: 0;
+}
+
+@media (max-width: 600px) {
+  .green_title {
+    font-size: var(--font-size-md);
+    letter-spacing: var(--letter-spacing-medium);
+  }
 }
