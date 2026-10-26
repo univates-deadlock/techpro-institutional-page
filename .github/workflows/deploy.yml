@@ -141,7 +141,7 @@ jobs:
           trap report_failure ERR
 
           # Navigate to application directory
-          cd "$HOME/techpro-web-landing-page"
+          cd "$HOME/techpro-institutional-page"
 
           echo "::group::Updating repository"
 

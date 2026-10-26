@@ -1,5 +1,6 @@
 *
 !Dockerfile
+!Caddyfile
 !index.html
 !pages/
 !pages/**

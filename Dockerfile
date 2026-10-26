@@ -1,9 +1,11 @@
-FROM nginx:1.30.5-alpine
+FROM caddy:2-alpine
 
-COPY index.html /usr/share/nginx/html/index.html
-COPY pages/ /usr/share/nginx/html/pages/
-COPY css/ /usr/share/nginx/html/css/
-COPY js/ /usr/share/nginx/html/js/
-COPY assets/ /usr/share/nginx/html/assets/
+COPY Caddyfile /etc/caddy/Caddyfile
 
-EXPOSE 80
+COPY index.html /usr/share/caddy/index.html
+COPY pages/ /usr/share/caddy/pages/
+COPY css/ /usr/share/caddy/css/
+COPY js/ /usr/share/caddy/js/
+COPY assets/ /usr/share/caddy/assets/
+
+EXPOSE 80 443 8080
