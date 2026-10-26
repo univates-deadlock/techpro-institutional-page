@@ -22,7 +22,7 @@ An institutional website developed as an academic project at Univates to present
 - **Web Components and ES modules:** reusable headers, footers and cards in `js/components/`, loaded through `js/main.js`.
 - **Modular CSS:** separate global, component and page styles in `css/`, with variables for colors, typography and spacing and BEM class naming. Responsive layouts use media queries.
 - **Static pages:** entry point in `index.html`, additional pages in `pages/`, and images and icons in `assets/`. The server must serve the project root because resources use absolute paths.
-- **Docker with Nginx Alpine:** an HTTP server for static files, with the image version specified in the `Dockerfile`. Compose standardizes execution on the VM, publishes port 8080 and restarts the service after reboots, provided Docker is running.
+- **Docker with Caddy Alpine:** an HTTP server for static files, with the image version specified in the `Dockerfile` and configuration in the `Caddyfile`. Compose standardizes execution on the VM, publishes ports 80, 443 and 8080, and restarts the service after reboots, provided Docker is running.
 
 The home page is still at an early stage, and some links lead to a placeholder page. Contact and newsletter forms have no backend integration. The Rubik font and map require internet access.
 

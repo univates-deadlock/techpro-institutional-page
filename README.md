@@ -22,7 +22,7 @@ Site institucional desenvolvido como projeto acadêmico na Univates para apresen
 - **Web Components e módulos ES:** cabeçalho, rodapé e cards reutilizáveis em `js/components/`, carregados por `js/main.js`.
 - **CSS modular:** estilos globais, componentes e páginas separados em `css/`, com variáveis para cores, tipografia e espaçamento e convenção BEM para as classes. Layouts responsivos com media queries.
 - **Páginas estáticas:** entrada em `index.html`, demais páginas em `pages/` e imagens e ícones em `assets/`. O servidor deve usar a raiz do projeto, pois os recursos usam caminhos absolutos.
-- **Docker com Nginx Alpine:** servidor HTTP para os arquivos estáticos, com a versão da imagem definida no `Dockerfile`. O Compose padroniza a execução na VM, publica a porta 8080 e reinicia o serviço após reinicializações, enquanto o Docker estiver ativo.
+- **Docker com Caddy Alpine:** servidor HTTP para os arquivos estáticos, com a versão da imagem definida no `Dockerfile` e configuração no `Caddyfile`. O Compose padroniza a execução na VM, publica as portas 80, 443 e 8080 e reinicia o serviço após reinicializações, enquanto o Docker estiver ativo.
 
 A Home ainda está em estágio inicial e alguns links levam a uma página de conteúdo não implementado. Os formulários de contato e newsletter não possuem integração com backend. A fonte Rubik e o mapa dependem de acesso à internet.
 
