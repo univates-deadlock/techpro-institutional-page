@@ -47,9 +47,9 @@ class SiteFooter extends HTMLElement {
             <!-- Institutional Links -->
             <nav class="footer__info-section">
               <h3 class="footer__info-section-subtitle">Institucional</h3>
-              <a class="footer__info-section-text" href="/pages/not_implemented.html">Sobre a TechPro</a>
-              <a class="footer__info-section-text" href="/pages/not_implemented.html">Quem somos</a>
-              <a class="footer__info-section-text" href="/pages/not_implemented.html">História</a>
+              <a class="footer__info-section-text" href="/pages/institutional.html">Sobre a TechPro</a>
+              <a class="footer__info-section-text" href="/pages/institutional.html">Quem somos</a>
+              <a class="footer__info-section-text" href="/pages/institutional.html">História</a>
             </nav>
 
             <!-- Customer Service & Hours -->

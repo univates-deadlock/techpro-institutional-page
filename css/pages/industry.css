@@ -7,16 +7,17 @@
    Available Services
    ========================================================================== */
 .industry-services {
-  padding: 38px 0 100px;
+  padding: var(--spacing-4xl) 0;
+  background-color: var(--color-background);
 }
 
 .industry-services__title {
   font-family: var(--font-family-primary);
   font-weight: var(--font-weight-semibold);
-  font-size: clamp(28px, 4vw, 64px);
-  line-height: 109.74%;
+  font-size: var(--font-size-5xl);
+  line-height: var(--line-height-tight);
   color: var(--color-background-hero);
-  margin-bottom: 38px;
+  margin-bottom: var(--spacing-2xl);
 }
 
 .industry-services__grid {
@@ -33,7 +34,7 @@
    Contact Invitation
    ========================================================================== */
 .industry-cta {
-  padding-bottom: 56px;
+  padding-bottom: var(--spacing-4xl);
   display: flex;
   justify-content: center;
 }
