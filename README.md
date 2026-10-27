@@ -24,7 +24,14 @@ Site institucional desenvolvido como projeto acadêmico na Univates para apresen
 - **Páginas estáticas:** entrada em `index.html`, demais páginas em `pages/` e imagens e ícones em `assets/`. O servidor deve usar a raiz do projeto, pois os recursos usam caminhos absolutos.
 - **Docker com Caddy Alpine:** servidor HTTP para os arquivos estáticos, com a versão da imagem definida no `Dockerfile` e configuração no `Caddyfile`. O Compose padroniza a execução na VM, publica as portas 80, 443 e 8080 e reinicia o serviço após reinicializações, enquanto o Docker estiver ativo.
 
-A Home ainda está em estágio inicial e alguns links levam a uma página de conteúdo não implementado. Os formulários de contato e newsletter não possuem integração com backend. A fonte Rubik e o mapa dependem de acesso à internet.
+A Home ainda está em estágio inicial e alguns links levam a uma página de conteúdo não implementado. A fonte Rubik e o mapa dependem de acesso à internet.
+
+## Ações de contato
+
+- **Orçamentos:** o formulário valida os dados e abre o WhatsApp com nome, telefone, e-mail, tipo de cliente e mensagem preenchidos. O visitante precisa revisar e confirmar o envio no WhatsApp; o site não envia mensagens automaticamente nem registra os dados em um servidor.
+- **Recuperação:** os campos permanecem preenchidos e um link permite abrir a mensagem caso o navegador bloqueie a nova janela. Sem JavaScript, o formulário fica desabilitado e os links diretos de contato continuam disponíveis na página de contato.
+- **Canais diretos:** os cartões abrem WhatsApp, ligação telefônica, aplicativo de e-mail ou endereço no Google Maps. O rodapé compartilhado oferece WhatsApp, telefone e e-mail, sem cadastro de newsletter.
+- **Dados existentes:** foram mantidos o número `+55 51 99394-8340` e o e-mail `contato@techpro.com`. A empresa deve confirmar que ambos são os canais oficiais e que a caixa de e-mail recebe mensagens. Um link de e-mail abre o aplicativo do visitante; não configura uma caixa postal ou serviço de envio.
 
 ## Como rodar localmente
 

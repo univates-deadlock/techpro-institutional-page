@@ -4,44 +4,26 @@ class SiteFooter extends HTMLElement {
       <footer class="footer">
         <div class="footer__container">
 
-          <!-- Newsletter Form -->
-          <form class="footer__form" id="newsletter-form">
-            <div class="footer__email-wrapper" aria-hidden="true">
+          <!-- Direct Contact Invitation -->
+          <section class="footer__contact" aria-labelledby="footer-contact-title">
+            <div class="footer__contact-icon-wrapper" aria-hidden="true">
               <img
-                src="/assets/icons/white-mail.svg"
+                src="/assets/icons/white-sms.svg"
                 alt=""
-                class="footer__mail"
+                class="footer__contact-icon"
               />
             </div>
-
-            <div class="footer__inputs-wrapper">
-              <h2 class="footer__inputs-text">Receba nossas ofertas e novidades!</h2>
-              <div class="footer__inputs-button">
-                <input
-                  class="footer__input"
-                  type="text"
-                  name="name"
-                  placeholder="Seu nome"
-                  aria-label="Seu nome"
-                  required
-                />
-                <input
-                  class="footer__input"
-                  type="email"
-                  name="email"
-                  placeholder="Seu e-mail"
-                  aria-label="Seu e-mail"
-                  required
-                />
-                <button
-                  class="footer__button btn btn--secondary"
-                  type="submit"
-                >
-                  Cadastrar
-                </button>
-              </div>
+            <div class="footer__contact-content">
+              <h2 class="footer__contact-title" id="footer-contact-title">Vamos conversar sobre seu projeto?</h2>
+              <p class="footer__contact-description">Fale com a TechPro e solicite seu orçamento.</p>
             </div>
-          </form>
+            <a
+              class="footer__contact-button btn btn--secondary"
+              href="https://wa.me/5551993948340?text=Ol%C3%A1%2C%20tudo%20bem%3F"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Chamar no WhatsApp</a>
+          </section>
 
           <!-- Info Sections & Navigation -->
           <div class="footer__info">
@@ -57,14 +39,15 @@ class SiteFooter extends HTMLElement {
             <!-- Customer Service & Hours -->
             <div class="footer__info-section">
               <h3 class="footer__info-section-subtitle">Atendimento</h3>
-              <span class="footer__info-section-text">Email</span>
+              <a class="footer__info-section-text" href="mailto:contato@techpro.com">contato@techpro.com</a>
+              <a class="footer__info-section-text" href="tel:+5551993948340">Telefone: (51) 99394-8340</a>
               <a
                 href="https://wa.me/5551993948340?text=Ol%C3%A1%2C%20tudo%20bem%3F"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="footer__info-section-text"
               >
-                +55 51 99394-8340
+                WhatsApp: (51) 99394-8340
               </a>
               <span class="footer__info-section-text">Segunda a sexta das 08:15 as 18:00</span>
               <span class="footer__info-section-text">Sábado das 08:30 as 12:00</span>

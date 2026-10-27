@@ -110,6 +110,11 @@ body.contact-page .hero__subtitle {
   box-shadow: var(--shadow-lg);
 }
 
+.principal__subcontainer:focus-visible {
+  outline: 3px solid var(--color-primary-dark);
+  outline-offset: var(--spacing-2xs);
+}
+
 /* Highlighted WhatsApp channel with primary brand gradient */
 .principal__whatsapp {
   background: var(--primary-gradient);
@@ -165,7 +170,7 @@ body.contact-page .hero__subtitle {
 }
 
 .principal__subcontainer-message {
-  color: var(--color-text-muted);
+  color: var(--color-text-body);
 }
 
 /* ==========================================================================
@@ -193,7 +198,7 @@ body.contact-page .hero__subtitle {
 
 /* Introductory supporting copy */
 .form__message {
-  color: var(--color-text-muted);
+  color: var(--color-text-body);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-light);
 }
@@ -206,6 +211,11 @@ body.contact-page .hero__subtitle {
 }
 
 /* Right Column: White elevated form card */
+.form__request {
+  display: block;
+  min-width: 0;
+}
+
 .form__form {
   display: flex;
   flex-direction: column;
@@ -214,6 +224,41 @@ body.contact-page .hero__subtitle {
   border-radius: var(--radius-xl);
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-sm);
+}
+
+.form__help,
+.form__status {
+  margin: 0;
+  color: var(--color-text-body);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  overflow-wrap: anywhere;
+}
+
+.form__help a {
+  text-decoration: underline;
+  text-underline-offset: var(--spacing-2xs);
+}
+
+.form__status {
+  padding: var(--spacing-md);
+  background-color: var(--color-background-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.form__button-submit,
+.form__fallback {
+  white-space: normal;
+  text-align: center;
+}
+
+.form__button-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.form__fallback[hidden] {
+  display: none;
 }
 
 /* Two-column row for Name & Phone */

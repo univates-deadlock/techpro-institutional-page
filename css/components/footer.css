@@ -16,47 +16,45 @@
 }
 
 /* ==========================================================================
-   Newsletter Form
+   Direct Contact Invitation
    ========================================================================== */
-.footer__form {
+.footer__contact {
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-  justify-content: center;
+  align-items: center;
   gap: var(--spacing-md);
   padding: var(--spacing-lg) 0;
   box-sizing: border-box;
 }
 
-/* Email Icon on the Left (Proportional square matching the entire form height) */
-.footer__email-wrapper {
+.footer__contact-icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
+  padding: var(--spacing-sm);
   background: var(--primary-gradient);
   border-radius: var(--radius-sm);
   flex-shrink: 0;
   box-sizing: border-box;
 }
 
-.footer__mail {
+.footer__contact-icon {
+  width: var(--spacing-xl);
+  height: var(--spacing-xl);
   object-fit: contain;
 }
 
-/* Title & Inputs Container */
-.footer__inputs-wrapper {
+.footer__contact-content {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: flex-start;
-  gap: 8px;
+  gap: var(--spacing-xs);
   flex: 1;
-  width: 100%;
+  min-width: 0;
 }
 
-.footer__inputs-text {
+.footer__contact-title {
   margin: 0;
   color: var(--color-emphasis-text);
   font-size: var(--font-size-2xl);
@@ -64,45 +62,15 @@
   line-height: var(--line-height-tight);
 }
 
-/* Inputs & Submit Button Grid */
-.footer__inputs-button {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 10px;
-  align-items: center;
-  width: 100%;
-}
-
-.footer__input {
-  width: 100%;
-  height: 38px;
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  padding: 0 14px;
-  font-size: var(--font-size-md);
-  background-color: var(--color-background);
-  color: var(--color-text-main);
-  outline: none;
-  transition:
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast);
-}
-
-.footer__input::placeholder {
-  color: var(--color-text-muted);
+.footer__contact-description {
+  margin: 0;
+  color: var(--color-neutral-200);
   font-size: var(--font-size-md);
 }
 
-.footer__input:focus {
-  border-color: var(--color-button-footer);
-  box-shadow: 0 0 0 3px
-    color-mix(in srgb, var(--color-button-footer) 30%, transparent);
-}
-
-.footer__button {
-  height: 38px;
-  min-width: 120px;
+.footer__contact-button {
+  white-space: normal;
+  text-align: center;
 }
 
 /* ==========================================================================
@@ -124,16 +92,24 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--spacing-xs);
+  min-width: 0;
 }
 
 .footer__info-section-text {
   color: var(--color-text-muted);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-regular);
+  overflow-wrap: anywhere;
 }
 
 a.footer__info-section-text:hover {
   color: var(--color-emphasis-text);
+}
+
+a.footer__info-section-text:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: var(--spacing-2xs);
+  border-radius: var(--radius-xs);
 }
 
 .footer__info-section-subtitle {
@@ -156,21 +132,15 @@ a.footer__info-section-text:hover {
   }
 }
 
-/* Tablets & Medium Screens (<= 890px): Empilha as caixas mais cedo */
+/* Tablets & Medium Screens (<= 890px) */
 @media (max-width: 890px) {
-  .footer__form {
+  .footer__contact {
+    flex-wrap: wrap;
     align-items: flex-start;
   }
 
-  .footer__email-wrapper {
-    width: 48px;
-    height: 48px;
-    padding: 6px;
-  }
-
-  .footer__mail {
-    width: 30px;
-    height: 24px;
+  .footer__contact-button {
+    margin-inline-start: auto;
   }
 
   .footer__info {
@@ -180,64 +150,26 @@ a.footer__info-section-text:hover {
   .footer__container {
     padding: 0 var(--page-padding-md);
   }
-
-  /* Empilha Nome, E-mail e Botão */
-  .footer__inputs-button {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-
-  /* Botão alinhado à esquerda */
-  .footer__button {
-    width: auto;
-    justify-self: end;
-    align-self: flex-end;
-  }
 }
 
 /* Mobile Devices (<= 600px) */
 @media (max-width: 600px) {
-  .footer__form {
+  .footer__contact {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 16px;
-    padding: 24px 0;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg) 0;
   }
 
-  .footer__email-wrapper {
-    width: 48px;
-    height: 48px;
-    padding: 8px;
-    align-self: center;
-  }
-
-  .footer__mail {
-    width: 28px;
-    height: 22px;
-  }
-
-  .footer__inputs-wrapper {
+  .footer__contact-content {
     align-items: center;
     text-align: center;
   }
 
-  .footer__inputs-text {
-    font-size: var(--font-size-2xl);
-    text-align: center;
-  }
-
-  .footer__inputs-button {
-    grid-template-columns: 1fr;
-    gap: 10px;
+  .footer__contact-button {
     width: 100%;
-  }
-
-  .footer__button {
-    width: 100%;
-    height: 38px;
-    justify-self: center;
-    align-self: center;
+    margin-inline-start: 0;
   }
 
   .footer__info {

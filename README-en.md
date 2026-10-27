@@ -24,7 +24,13 @@ An institutional website developed as an academic project at Univates to present
 - **Static pages:** entry point in `index.html`, additional pages in `pages/`, and images and icons in `assets/`. The server must serve the project root because resources use absolute paths.
 - **Docker with Caddy Alpine:** an HTTP server for static files, with the image version specified in the `Dockerfile` and configuration in the `Caddyfile`. Compose standardizes execution on the VM, publishes ports 80, 443 and 8080, and restarts the service after reboots, provided Docker is running.
 
-The home page is still at an early stage, and some links lead to a placeholder page. Contact and newsletter forms have no backend integration. The Rubik font and map require internet access.
+The home page is still at an early stage, and some links lead to a placeholder page. The Rubik font and map require internet access.
+
+## Contact actions
+
+The quote form validates the visitor's details and prepares a WhatsApp message with their name, phone, email, customer type and description. The visitor reviews and sends the message in WhatsApp. Input is preserved, and a fallback link is provided if the new window is blocked. Without JavaScript, the submit button stays disabled and the contact page offers direct links.
+
+Contact cards open WhatsApp, a phone call, the visitor's email application or Google Maps. The shared footer offers direct contact instead of an unconnected newsletter signup. No email delivery service, subscriber list or server storage is configured. The existing number `+55 51 99394-8340` and email `contato@techpro.com` are retained and must be confirmed by the business.
 
 ## Run locally
 
