@@ -30,7 +30,7 @@ class CustomerCard extends HTMLElement {
     if (benefits) this.querySelector(".customer-card__list").append(...benefits.children);
 
     this.querySelector(".customer-card__button").href =
-      this.getAttribute("product-href") ?? "/pages/not_implemented.html";
+      this.getAttribute("product-href") ?? "/pages/404.html";
     this.querySelector(".customer-card__title").textContent =
       this.getAttribute("heading") ?? "";
     this.querySelector(".customer-card__text").textContent =
