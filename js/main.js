@@ -1,6 +1,7 @@
 import "./components/header.js";
 import "./components/footer.js";
 import "./components/contact-invitation.js";
+import "./components/contact-form.js";
 
 import "./components/shared/audience-hero.js";
 import "./components/customers/customer-card.js";

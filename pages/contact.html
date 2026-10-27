@@ -35,19 +35,24 @@
          ==================================================================== -->
     <main class="principal container">
       <!-- WhatsApp Direct Channel -->
-      <div class="principal__whatsapp principal__subcontainer">
+      <a
+        class="principal__whatsapp principal__subcontainer"
+        href="https://wa.me/5551993948340?text=Ol%C3%A1%2C%20tudo%20bem%3F"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img
           src="/assets/icons/white-sms.svg"
           alt="Ícone de mensagem"
           class="principal__whatsapp-icon"
         />
-        <h3 class="principal__whatsapp-title">Whatsapp</h3>
+        <h3 class="principal__whatsapp-title">WhatsApp</h3>
         <span class="principal__whatsapp-subtitle">(51) 99394-8340</span>
         <span class="principal__whatsapp-message">Resposta imediata</span>
-      </div>
+      </a>
 
       <!-- Phone Channel -->
-      <div class="principal__subcontainer-other principal__subcontainer">
+      <a class="principal__subcontainer-other principal__subcontainer" href="tel:+5551993948340">
         <img
           src="/assets/icons/green-phone.svg"
           alt="Ícone de telefone"
@@ -58,26 +63,31 @@
         <span class="principal__subcontainer-message"
           >Seg-Sex . 08:15 às 18:00</span
         >
-      </div>
+      </a>
 
       <!-- Email Channel -->
-      <div class="principal__subcontainer-other principal__subcontainer">
+      <a class="principal__subcontainer-other principal__subcontainer" href="mailto:contato@techpro.com">
         <img
           src="/assets/icons/green-mail.svg"
           alt="Ícone de e-mail"
           class="principal__subcontainer-icon"
         />
-        <h3 class="principal__subcontainer-title">Email</h3>
+        <h3 class="principal__subcontainer-title">E-mail</h3>
         <span class="principal__subcontainer-subtitle"
           >contato@techpro.com</span
         >
         <span class="principal__subcontainer-message"
           >Resposta em até 24h.</span
         >
-      </div>
+      </a>
 
       <!-- Physical Office Address -->
-      <div class="principal__subcontainer-other principal__subcontainer">
+      <a
+        class="principal__subcontainer-other principal__subcontainer"
+        href="https://www.google.com/maps/search/?api=1&amp;query=Rua%20Saldanha%20Marinho%2C%20299%2C%20Centro%2C%20Lajeado%2C%20RS"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img
           src="/assets/icons/green-location-pin.svg"
           alt="Ícone de localização"
@@ -90,7 +100,7 @@
         <span class="principal__subcontainer-message"
           >Centro - Lajeado, RS - 95900-020</span
         >
-      </div>
+      </a>
     </main>
 
     <!-- ====================================================================
@@ -103,9 +113,9 @@
           <h2 class="form__title green_title">Formulário</h2>
           <h3 class="form__subtitle">Conte-nos sobre seu projeto</h3>
           <span class="form__message"
-            >Preencha o formulário e enviaremos um orçamento personalizado. Você
-            também pode falar diretamente conosco pelo WhatsApp para um
-            atendimento ainda mais rápido.</span
+            >Preencha seus dados para preparar uma solicitação de orçamento.
+            Ao continuar, o WhatsApp será aberto com a mensagem pronta para
+            você revisar e enviar. Se preferir, inicie uma conversa diretamente.</span
           >
           <a
             href="https://wa.me/5551993948340?text=Ol%C3%A1%2C%20tudo%20bem%3F"
@@ -117,83 +127,108 @@
         </div>
 
         <!-- Interactive Budget Request Form -->
-        <form class="form__form">
-          <!-- Name & Phone Row -->
-          <div class="form__row">
+        <contact-form class="form__request">
+          <form
+            class="form__form"
+            action="https://wa.me/5551993948340"
+            method="get"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-describedby="contact-form-help"
+          >
+            <p class="form__help" id="contact-form-help">Nome, telefone e e-mail são obrigatórios. O envio é confirmado por você no WhatsApp.</p>
+            <!-- Name & Phone Row -->
+            <div class="form__row">
+              <div class="form__group">
+                <label for="name" class="form__label">Nome completo</label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  autocomplete="name"
+                  minlength="2"
+                  maxlength="100"
+                  required
+                  class="form__input"
+                />
+              </div>
+
+              <div class="form__group">
+                <label for="telephone" class="form__label"
+                  >Telefone / WhatsApp</label
+                >
+                <input
+                  type="tel"
+                  name="telephone"
+                  id="telephone"
+                  autocomplete="tel"
+                  inputmode="tel"
+                  maxlength="25"
+                  aria-describedby="telephone-help"
+                  required
+                  class="form__input"
+                />
+                <span class="form__help" id="telephone-help">Inclua o DDD. Ex.: (51) 99394-8340.</span>
+              </div>
+            </div>
+
+            <!-- Email Field -->
             <div class="form__group">
-              <label for="name" class="form__label">Nome completo</label>
+              <label for="email" class="form__label">E-mail</label>
               <input
-                type="text"
-                name="name"
-                id="name"
+                type="email"
+                name="email"
+                id="email"
+                autocomplete="email"
+                maxlength="254"
                 required
                 class="form__input"
               />
             </div>
 
+            <!-- Customer Type Field -->
             <div class="form__group">
-              <label for="telephone" class="form__label"
-                >Telefone / Whatsapp</label
+              <label for="customer_type" class="form__label"
+                >Tipo de cliente (opcional)</label
               >
-              <input
-                type="tel"
-                name="telephone"
-                id="telephone"
-                required
-                class="form__input"
-              />
+              <select
+                name="customer_type"
+                id="customer_type"
+                class="form__select"
+              >
+                <option value="" selected>Selecione uma opção</option>
+                <option value="home">Residencial</option>
+                <option value="commercial">Comercial</option>
+                <option value="condominium">Condomínio</option>
+                <option value="industry">Indústrias</option>
+                <option value="other">Outro</option>
+              </select>
             </div>
-          </div>
 
-          <!-- Email Field -->
-          <div class="form__group">
-            <label for="email" class="form__label">E-mail</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              required
-              class="form__input"
-            />
-          </div>
+            <!-- Project Description / Observations Field -->
+            <div class="form__group">
+              <label for="obs" class="form__label"
+                >Mensagem / Descrição de necessidade (opcional)</label
+              >
+              <textarea name="obs" id="obs" class="form__textarea" maxlength="1000"></textarea>
+            </div>
 
-          <!-- Customer Type Field -->
-          <div class="form__group">
-            <label for="customer_type" class="form__label"
-              >Tipo de cliente</label
-            >
-            <select
-              name="customer_type"
-              id="customer_type"
-              class="form__select"
-            >
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option value="home">Residencial</option>
-              <option value="commercial">Comercial</option>
-              <option value="condominium">Condomínio</option>
-              <option value="industry">Indústrias</option>
-              <option value="other">Outro</option>
-            </select>
-          </div>
-
-          <!-- Project Description / Observations Field -->
-          <div class="form__group">
-            <label for="obs" class="form__label"
-              >Mensagem / Descrição de necessidade</label
-            >
-            <textarea name="obs" id="obs" class="form__textarea"></textarea>
-          </div>
-
-          <!-- Submit Button -->
-          <button type="submit" class="form__button-submit btn btn--primary btn--full">
-            <img
-              src="/assets/icons/white-send-budget.svg"
-              alt=""
-              class="form__button-icon btn__icon"
-            />
-            <span>Solicitar orçamento</span>
-          </button>
-        </form>
+            <!-- Submit Button -->
+            <button type="submit" class="form__button-submit btn btn--primary btn--full" disabled>
+              <img
+                src="/assets/icons/white-send-budget.svg"
+                alt=""
+                class="form__button-icon btn__icon"
+              />
+              <span>Continuar no WhatsApp</span>
+            </button>
+            <p class="form__status" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+            <a class="form__fallback btn btn--secondary btn--full" target="_blank" rel="noopener noreferrer" hidden>Abrir conversa no WhatsApp</a>
+            <noscript>
+              <p class="form__help">Para preparar a mensagem pelo formulário, ative o JavaScript. Você também pode usar o botão “Chamar no WhatsApp” ou escrever para <a href="mailto:contato@techpro.com">contato@techpro.com</a>.</p>
+            </noscript>
+          </form>
+        </contact-form>
       </div>
     </section>
 
