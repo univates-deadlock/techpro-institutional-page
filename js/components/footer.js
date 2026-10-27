@@ -73,10 +73,10 @@ class SiteFooter extends HTMLElement {
             <!-- Usage Policies -->
             <nav class="footer__info-section" aria-label="Políticas de uso">
               <h3 class="footer__info-section-subtitle">Políticas de uso</h3>
-              <a class="footer__info-section-text" href="/pages/not_implemented.html">Termos de uso</a>
-              <a class="footer__info-section-text" href="/pages/not_implemented.html">Política de entrega</a>
-              <a class="footer__info-section-text" href="/pages/not_implemented.html">Política de trocas e devoluções</a>
-              <a class="footer__info-section-text" href="/pages/not_implemented.html">Políticas de pagamento</a>
+              <a class="footer__info-section-text" href="/pages/404.html">Termos de uso</a>
+              <a class="footer__info-section-text" href="/pages/404.html">Política de entrega</a>
+              <a class="footer__info-section-text" href="/pages/404.html">Política de trocas e devoluções</a>
+              <a class="footer__info-section-text" href="/pages/404.html">Políticas de pagamento</a>
             </nav>
 
             <!-- Social Media & Contact Channels -->
