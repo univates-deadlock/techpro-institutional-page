@@ -1,26 +1,14 @@
-techpro.matbdev.com {
-	root * /usr/share/caddy
-	encode zstd gzip
-	file_server
-
-	handle_errors {
-		@404 expression `{err.status_code} == 404`
-		handle @404 {
-			rewrite * /pages/404.html
-			file_server
-		}
-	}
-}
-
+# Internal-only web server; public HTTPS is handled by deadlock-deploy/infra/edge.
 :8080 {
-	root * /usr/share/caddy
-	file_server
+    root * /usr/share/caddy
+    encode zstd gzip
+    file_server
 
-	handle_errors {
-		@404 expression `{err.status_code} == 404`
-		handle @404 {
-			rewrite * /pages/404.html
-			file_server
-		}
-	}
+    handle_errors {
+        @404 expression `{err.status_code} == 404`
+        handle @404 {
+            rewrite * /pages/404.html
+            file_server
+        }
+    }
 }
