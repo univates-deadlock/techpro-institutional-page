@@ -2,12 +2,12 @@ services:
   web:
     build: .
     ports:
-      - "80:80"
-      - "443:443"
       - "127.0.0.1:8080:8080"
-    volumes:
-      - caddy_data:/data
-      - caddy_config:/config
+    networks:
+      default: {}
+      deadlock_edge:
+        aliases:
+          - techpro-site
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/pages/home.html"]
