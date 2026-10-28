@@ -14,26 +14,66 @@
 
 ---
 
-Site institucional desenvolvido como projeto acadêmico na Univates para apresentar a TechPro, seus serviços de segurança eletrônica, automação e instalações elétricas, além de informações para clientes e canais de contato.
+Site institucional desenvolvido como projeto acadêmico na Univates para apresentar a TechPro, suas soluções em segurança eletrônica, automação com IA, controle de acesso, manutenção e infraestrutura elétrica, além dos perfis de clientes atendidos, histórico institucional e canais diretos de contato.
 
 ## Construção e decisões técnicas
 
-- **HTML, CSS e JavaScript puro:** execução direta no navegador, sem frameworks, dependências npm ou compilação do front-end.
-- **Web Components e módulos ES:** cabeçalho, rodapé e cards reutilizáveis em `js/components/`, carregados por `js/main.js`.
-- **CSS modular:** estilos globais, componentes e páginas separados em `css/`, com variáveis para cores, tipografia e espaçamento, convenção BEM e layouts responsivos com media queries.
-- **Páginas estáticas:** entrada em `index.html`, demais páginas em `pages/` e imagens e ícones em `assets/`. Os recursos utilizam caminhos absolutos a partir da raiz do site.
-- **Docker e Docker Compose:** o `Dockerfile` cria uma imagem com os arquivos estáticos e o servidor Caddy. O `compose.yaml` define portas, volumes persistentes e política de reinicialização para execução na VM.
-- **Caddy:** servidor web que entrega os arquivos estáticos, gerencia HTTPS para `techpro.matbdev.com`, aplica compressão HTTP e apresenta uma página personalizada em erros 404.
-- **GitHub Actions:** deploy automático na VM da Univates após alterações na branch `main`, utilizando SSH, atualização do repositório, Docker Compose e uma verificação HTTP.
+- **HTML, CSS e JavaScript puro:** execução direta no navegador, sem frameworks, dependências npm ou etapa de compilação do front-end.
+- **Web Components nativos e módulos ES:** elementos customizados reutilizáveis em `js/components/`, registrados centralmente por `js/main.js`.
+- **CSS modular e Design Tokens:** tokens globais de cores, tipografia, espaçamento, bordas e sombras em `css/variables.css`, estilos base em `css/global.css`, componentes compartilhados em `css/components/` e estilos específicos em `css/pages/`, seguindo a convenção BEM, estados `.is-*` e breakpoints principais em `1280px`, `890px` e `600px`.
+- **Roteamento estático e página 404:** a entrada `index.html` redireciona para `/pages/home.html` e os recursos utilizam caminhos absolutos a partir da raiz do site. Links para subpáginas ou políticas ainda não detalhadas apontam para `pages/404.html`, também servida automaticamente pelo Caddy em erros HTTP `404`.
+- **Docker, Docker Compose e Caddy:** o `Dockerfile` empacota os arquivos estáticos com `caddy:2-alpine` escutando internamente em `:8080` com compressão `zstd`/`gzip` (`Caddyfile`). O `compose.yaml` publica `127.0.0.1:8080:8080`, define política de reinicialização, *health check* HTTP e conecta o serviço à rede externa `deadlock_edge` (alias `techpro-site`) para publicação HTTPS via proxy reverso compartilhado.
+- **Integração Contínua (CI):** o workflow `.github/workflows/ci.yml` valida arquivos essenciais, a configuração do Docker Compose e o build da imagem a cada pull request ou push na `main`.
 
-Alguns links levam a uma página de conteúdo não implementado. A fonte Rubik e o mapa dependem de acesso à internet.
+A fonte `Rubik` (Google Fonts) e o mapa incorporado na página de contato dependem de acesso à internet.
+
+## Estrutura do projeto
+
+```text
+techpro-institutional-page/
+├── assets/
+│   ├── icons/          # Ícones vetoriais (SVG)
+│   └── images/         # Logotipos, fotos e ilustrações por seção
+├── css/
+│   ├── components/     # Estilos reutilizáveis (botões, cabeçalho, rodapé, cards, CTAs)
+│   ├── pages/          # Estilos específicos de cada página
+│   ├── global.css      # Reset, layout base, utilitários e importações
+│   └── variables.css   # Design tokens (cores, tipografia, espaçamentos, sombras)
+├── js/
+│   ├── components/     # Web Components nativos e utilitários compartilhados
+│   └── main.js         # Ponto de entrada que registra os componentes
+├── pages/              # Páginas HTML da aplicação
+├── Caddyfile           # Configuração interna do Caddy (:8080, compressão e erro 404)
+├── Dockerfile          # Imagem baseada em caddy:2-alpine
+├── compose.yaml        # Orquestração Docker Compose, healthcheck e rede de borda
+└── index.html          # Redirecionamento da raiz para /pages/home.html
+```
+
+### Páginas disponíveis
+
+| Arquivo | Descrição |
+| :--- | :--- |
+| `pages/home.html` | Página inicial com apresentação, públicos atendidos, serviços, diferenciais e CTA de orçamento. |
+| `pages/services.html` | Catálogo detalhado de serviços (manutenção, alarmes, automação com IA, controle de acesso e câmeras) e etapas de atendimento. |
+| `pages/customers.html` | Segmentos atendidos, tabela comparativa de aplicações por perfil e galeria de serviços em destaque. |
+| `pages/industry.html` | Página dedicada às soluções de monitoramento, leitura de placas, câmeras térmicas e automação industrial. |
+| `pages/institutional.html` | História da empresa, indicadores de atuação, missão, visão, valores e mensagem institucional. |
+| `pages/contact.html` | Canais diretos de atendimento, formulário interativo de orçamento e mapa de localização. |
+| `pages/404.html` | Página personalizada de erro 404 com atalhos rápidos para as seções principais do site. |
+
+### Web Components
+
+- **Layout e seções compartilhadas:** `<site-header>`, `<site-footer>`, `<contact-invitation>` (alias `<site-cta>`) e `<audience-hero>`.
+- **Serviços:** `<service-summary>`, `<service-details>` e `<service-process-card>`.
+- **Clientes e indústria:** `<customer-card>`, `<featured-service-card>` e `<industry-service-card>` (baseados no helper `renderImageCard`).
+- **Institucional e contato:** `<institutional-stat-card>`, `<institutional-purpose-card>` e `<contact-form>`.
 
 ## Ações de contato
 
 - **Orçamentos:** o formulário valida os dados e abre o WhatsApp com nome, telefone, e-mail, tipo de cliente e mensagem preenchidos. O visitante precisa revisar e confirmar o envio no WhatsApp; o site não envia mensagens automaticamente nem registra os dados em um servidor.
-- **Recuperação:** os campos permanecem preenchidos e um link permite abrir a mensagem caso o navegador bloqueie a nova janela. Sem JavaScript, o formulário fica desabilitado e os links diretos de contato continuam disponíveis na página de contato.
+- **Recuperação:** os campos permanecem preenchidos e um link permite abrir a mensagem caso o navegador bloqueie a nova janela. Sem JavaScript, o envio pelo formulário fica desabilitado e os links diretos de contato continuam disponíveis na página.
 - **Canais diretos:** os cartões abrem WhatsApp, ligação telefônica, aplicativo de e-mail ou endereço no Google Maps. O rodapé compartilhado oferece WhatsApp, telefone e e-mail, sem cadastro de newsletter.
-- **Dados existentes:** foram mantidos o número `+55 51 99394-8340` e o e-mail `contato@techpro.com`. A empresa deve confirmar que ambos são os canais oficiais e que a caixa de e-mail recebe mensagens. Um link de e-mail abre o aplicativo do visitante; não configura uma caixa postal ou serviço de envio.
+- **Dados de atendimento:** foram mantidos o número `+55 51 99394-8340` e o e-mail `contato@techpro.com`. A empresa deve confirmar que ambos são os canais oficiais e que a caixa de e-mail recebe mensagens. Um link de e-mail abre o aplicativo do visitante; não configura uma caixa postal ou serviço de envio.
 
 ## Como rodar localmente
 
@@ -58,81 +98,45 @@ Pré-requisitos: Git, Python 3 e um navegador atual.
 
 Para encerrar o servidor, pressione `Ctrl+C`. O endereço `127.0.0.1` limita o acesso ao próprio computador.
 
-## Como rodar na VM com Docker
+## Como rodar com Docker
 
-A execução na VM da Univates é a configuração de **produção**, separada da execução local.
+A execução via Docker reproduz o contêiner estático utilizado em produção atrás do proxy reverso compartilhado (**https://techpro.matbdev.com**).
 
-Pré-requisitos: Git, Docker Engine e Docker Compose instalados na VM, com permissão para executar comandos Docker; domínio apontando para a VM e portas 80/443 acessíveis conforme a configuração de rede.
+Pré-requisitos: Git, Docker Engine ativo e Docker Compose instalado, com permissão para executar comandos Docker.
 
-1. Clone o repositório na VM:
+1. Clone o repositório e entre no diretório, conforme o passo 1 acima.
+2. Caso a rede externa `deadlock_edge` ainda não exista no ambiente Docker, crie-a uma única vez:
 
    ```bash
-   git clone https://github.com/univates-deadlock/techpro-institutional-page.git
-   cd techpro-institutional-page
+   docker network inspect deadlock_edge >/dev/null 2>&1 || docker network create deadlock_edge
    ```
 
-2. Construa a imagem e inicie o serviço:
+3. Construa a imagem e inicie o serviço em segundo plano:
 
    ```bash
    docker compose up -d --build
    ```
 
-3. Acesse o site pelo endereço público: **https://techpro.matbdev.com**.
-
-4. Consulte o estado e os logs:
+4. Consulte o estado, os logs e a resposta HTTP local:
 
    ```bash
    docker compose ps
    docker compose logs -f web
-   ```
-
-5. Verifique a resposta HTTP diretamente na VM:
-
-   ```bash
    curl -I http://127.0.0.1:8080/pages/home.html
    ```
 
-### Portas e segurança
+### Portas e rede
 
-O mapeamento recomendado no `compose.yaml` de produção é:
+No `compose.yaml`, o serviço expõe e opera da seguinte forma:
 
-```yaml
-ports:
-  - "80:80"
-  - "443:443"
-  - "127.0.0.1:8080:8080"
-```
+- **`127.0.0.1:8080:8080`:** acesso HTTP restrito ao `localhost` da máquina hospedeira para testes locais e verificação de saúde (*health check*). A porta `8080` não fica exposta publicamente.
+- **Rede `deadlock_edge` (`techpro-site:8080`):** permite que o proxy reverso central encaminhe o tráfego HTTPS público (`https://techpro.matbdev.com`, portas `80`/`443`) para este contêiner, sem conflito de portas no host.
 
-- **80/TCP:** HTTP, redirecionamento para HTTPS e suporte à validação de certificados.
-- **443/TCP:** acesso público ao site por HTTPS.
-- **8080/TCP:** acesso HTTP restrito ao localhost da VM, utilizado pelo health check do deploy.
-
-O bloco `:8080` permanece no `Caddyfile`: quem restringe a exposição da porta na VM é o mapeamento `127.0.0.1:8080:8080` do Docker Compose. A porta 8080 **não precisa estar acessível publicamente**.
-
-Para atualizar manualmente o contêiner após uma alteração nos arquivos, execute `docker compose up -d --build`. Para encerrar e remover o contêiner, use:
+Para aplicar alterações nos arquivos, execute novamente `docker compose up -d --build`. Para encerrar e remover o contêiner:
 
 ```bash
 docker compose down
 ```
-
-Os volumes nomeados do Caddy permanecem após esse comando.
-
-## Deploy automático
-
-O arquivo [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) implementa a publicação automatizada com GitHub Actions.
-
-O workflow é acionado por um **push na branch `main`** ou manualmente pela opção **Run workflow** no GitHub.
-
-Fluxo de implantação:
-
-1. A Action configura a conexão SSH usando os secrets `VM_HOST`, `VM_USER`, `VM_PORT`, `VM_SSH_KEY` e `VM_KNOWN_HOSTS`.
-2. Conecta-se à VM e acessa o diretório `$HOME/techpro-institutional-page`.
-3. Atualiza a branch principal com `git pull --ff-only origin main`.
-4. Valida o Compose e executa `docker compose up -d --build` na própria VM.
-5. Verifica a disponibilidade de `/pages/home.html` com uma requisição a `http://127.0.0.1:8080`.
-6. Registra informações de diagnóstico em caso de falha e limpa imagens Docker não utilizadas ao final.
-
-O processo automatiza o **Continuous Deployment (CD)**, mas não executa uma suíte completa de testes de integração contínua (CI). O health check confirma uma resposta HTTP válida; não substitui testes funcionais e não há rollback automático configurado no workflow.
 
 ---
 

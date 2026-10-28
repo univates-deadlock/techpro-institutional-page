@@ -1,4 +1,4 @@
-# TechPro Web Landing Page
+# TechPro Institutional Page
 
 ## Stack
 
@@ -19,13 +19,17 @@ Project rules in this file take precedence over generic skill guidance.
 
 ## Project Structure
 
+- `index.html` → root entry point (redirects to `/pages/home.html`)
+- `pages/` → HTML pages (`home`, `services`, `customers`, `industry`, `institutional`, `contact`, `404`)
+- `assets/icons/` → SVG icons
+- `assets/images/` → logos, photos, and illustrations grouped by section
 - `css/variables.css` → design tokens
-- `css/global.css` → global styles and utilities
-- `css/components/` → reusable components
+- `css/global.css` → global styles, utilities, and stylesheet imports
+- `css/components/` → reusable component styles
 - `css/pages/` → page-specific styles
-- `js/components/` → reusable Web Components
-- `js/main.js` → application initialization
-- `pages/` → secondary HTML pages
+- `js/components/` → reusable Native Web Components and shared helpers
+- `js/main.js` → component registration entry point
+- `Caddyfile`, `Dockerfile`, `compose.yaml` → static file server and container configuration
 
 ## CSS Conventions
 
@@ -54,11 +58,11 @@ Before creating a component:
 3. Put reusable styles in `css/components/`.
 4. Put reusable JavaScript components in `js/components/`.
 
-Existing global components include:
+Existing reusable components include:
 
-- `site-header`
-- `site-footer`
-- shared buttons
+- Global layout & CTAs: `site-header`, `site-footer`, `contact-invitation` (`site-cta`), `audience-hero`
+- Shared CSS components: buttons (`.btn`, `.btn--primary`, `.btn--secondary`, `.btn--outline`, `.btn--dark`), `.image-card` (`renderImageCard` helper), `.customer-card`
+- Domain Web Components: `contact-form`, `customer-card`, `featured-service-card`, `industry-service-card`, `service-summary`, `service-details`, `service-process-card`, `institutional-stat-card`, `institutional-purpose-card`
 
 ## Responsive Design
 
