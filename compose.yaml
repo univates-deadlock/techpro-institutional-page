@@ -2,14 +2,21 @@ services:
   web:
     build: .
     ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-    volumes:
-      - caddy_data:/data
-      - caddy_config:/config
+      - "127.0.0.1:8080:8080"
+    networks:
+      default: {}
+      deadlock_edge:
+        aliases:
+          - techpro-site
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/pages/home.html"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
-volumes:
-  caddy_data:
-  caddy_config:
+networks:
+  deadlock_edge:
+    external: true
+    name: deadlock_edge
