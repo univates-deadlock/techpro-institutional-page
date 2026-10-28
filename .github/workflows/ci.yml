@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate institutional site
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate required files and Compose
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          test -s index.html
+          test -s pages/home.html
+          test -s Caddyfile
+          docker compose config --quiet
+      - name: Build Caddy image
+        run: docker build --tag techpro-institutional-ci .
