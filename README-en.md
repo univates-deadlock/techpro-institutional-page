@@ -14,32 +14,72 @@
 
 ---
 
-An institutional website developed as an academic project at Univates to present TechPro, its electronic security, automation and electrical installation services, along with customer information and contact channels.
+An institutional website developed as an academic project at Univates to present TechPro, its electronic security, AI automation, access control, maintenance, and electrical infrastructure solutions, along with customer segments, company background, and direct contact channels.
 
 ## Implementation and technical decisions
 
-- **Plain HTML, CSS and JavaScript:** runs directly in the browser, without frameworks, npm dependencies or a front-end compilation step.
-- **Web Components and ES modules:** reusable headers, footers and cards in `js/components/`, loaded through `js/main.js`.
-- **Modular CSS:** separate global, component and page styles in `css/`, with variables for colors, typography and spacing, BEM class naming and responsive layouts using media queries.
-- **Static pages:** the entry point is `index.html`, additional pages are in `pages/`, and images and icons are in `assets/`. Resources use absolute paths relative to the site root.
-- **Docker and Docker Compose:** the `Dockerfile` builds an image containing the static files and the Caddy web server. `compose.yaml` defines ports, persistent volumes and a restart policy for running on the VM.
-- **Caddy:** the web server delivers static files, manages HTTPS for `techpro.matbdev.com`, compresses HTTP responses and serves a custom page for 404 errors.
-- **GitHub Actions:** automatically deploys changes from the `main` branch to the Univates VM using SSH, repository updates, Docker Compose and an HTTP availability check.
+- **Plain HTML, CSS, and JavaScript:** runs directly in the browser without frameworks, npm dependencies, or a front-end compilation step.
+- **Native Web Components and ES modules:** reusable custom elements in `js/components/`, centrally registered through `js/main.js`.
+- **Modular CSS and Design Tokens:** global tokens for colors, typography, spacing, radius, and shadows in `css/variables.css`, base rules in `css/global.css`, shared components in `css/components/`, and page-specific styles in `css/pages/`, following BEM naming, `.is-*` state classes, and primary breakpoints at `1280px`, `890px`, and `600px`.
+- **Static routing and 404 page:** the entry point `index.html` redirects to `/pages/home.html`, and assets use root-relative paths. Links to unpublished subpages or policies point to `pages/404.html`, which Caddy also serves automatically on HTTP `404` errors.
+- **Docker, Docker Compose, and Caddy:** the `Dockerfile` packages the static files with `caddy:2-alpine` listening internally on `:8080` with `zstd`/`gzip` compression (`Caddyfile`). `compose.yaml` binds `127.0.0.1:8080:8080`, configures a restart policy and HTTP health check, and attaches the container to the external `deadlock_edge` network (alias `techpro-site`) behind a shared HTTPS reverse proxy.
+- **Continuous Integration (CI):** `.github/workflows/ci.yml` validates required files, the Docker Compose configuration, and the container image build on pull requests and pushes to `main`.
 
-Some links lead to a placeholder page. The Rubik font and the map require internet access.
+The `Rubik` font (Google Fonts) and the embedded map on the contact page require internet access.
+
+## Project structure
+
+```text
+techpro-institutional-page/
+├── assets/
+│   ├── icons/          # Vector icons (SVG)
+│   └── images/         # Logos, photos, and illustrations grouped by section
+├── css/
+│   ├── components/     # Reusable styles (buttons, header, footer, cards, CTAs)
+│   ├── pages/          # Page-specific stylesheets
+│   ├── global.css      # Reset, base layout, utilities, and imports
+│   └── variables.css   # Design tokens (colors, typography, spacing, shadows)
+├── js/
+│   ├── components/     # Native Web Components and shared helpers
+│   └── main.js         # Entry point registering custom elements
+├── pages/              # Application HTML pages
+├── Caddyfile           # Internal Caddy configuration (:8080, compression, and 404 handling)
+├── Dockerfile          # Container image based on caddy:2-alpine
+├── compose.yaml        # Docker Compose orchestration, healthcheck, and edge network
+└── index.html          # Root redirect to /pages/home.html
+```
+
+### Available pages
+
+| File | Description |
+| :--- | :--- |
+| `pages/home.html` | Home page featuring company overview, target audiences, services, differentiators, and quote CTA. |
+| `pages/services.html` | Detailed service catalog (maintenance, alarms, AI automation, access control, and cameras) and service workflow. |
+| `pages/customers.html` | Customer segments, product-by-profile comparison table, and featured service gallery. |
+| `pages/industry.html` | Dedicated industrial solutions page covering perimeter monitoring, license plate reading, thermal cameras, and automation. |
+| `pages/institutional.html` | Company background, key metrics, mission, vision, values, and leadership statement. |
+| `pages/contact.html` | Direct contact channels, interactive quote request form, and embedded location map. |
+| `pages/404.html` | Custom 404 error page with quick navigation shortcuts to main sections. |
+
+### Web Components
+
+- **Global layout and shared sections:** `<site-header>`, `<site-footer>`, `<contact-invitation>` (alias `<site-cta>`), and `<audience-hero>`.
+- **Services:** `<service-summary>`, `<service-details>`, and `<service-process-card>`.
+- **Customers and industry:** `<customer-card>`, `<featured-service-card>`, and `<industry-service-card>` (built on the shared `renderImageCard` helper).
+- **Institutional and contact:** `<institutional-stat-card>`, `<institutional-purpose-card>`, and `<contact-form>`.
 
 ## Contact actions
 
-- **Quote requests:** the form validates visitor details and opens WhatsApp with their name, phone, email, customer type and message filled in. The visitor must review and send the message in WhatsApp; the website does not send messages automatically or store this information on a server.
+- **Quote requests:** the form validates visitor details and opens WhatsApp with their name, phone, email, customer type, and message filled in. The visitor must review and send the message in WhatsApp; the website does not send messages automatically or store this information on a server.
 - **Fallback:** entered values are preserved, and a link lets the visitor open the prepared message if the browser blocks the new window. Without JavaScript, form submission stays disabled and direct contact links remain available on the contact page.
-- **Direct channels:** cards open WhatsApp, a phone call, the visitor's email application or Google Maps. The shared footer offers WhatsApp, phone and email links rather than a newsletter signup.
-- **Existing details:** the phone number `+55 51 99394-8340` and email `contato@techpro.com` have been retained. The business must confirm that both are official contact channels and that the email inbox receives messages. An email link opens the visitor's email application; it does not configure a mailbox or delivery service.
+- **Direct channels:** cards open WhatsApp, a phone call, the visitor's email application, or Google Maps. The shared footer offers WhatsApp, phone, and email links rather than a newsletter signup.
+- **Contact details:** the phone number `+55 51 99394-8340` and email `contato@techpro.com` have been retained. The business must confirm that both are official contact channels and that the email inbox receives messages. An email link opens the visitor's email application; it does not configure a mailbox or delivery service.
 
 ## Run locally
 
-This is the recommended way to develop and test the website **on your own computer**, without Docker, a VM, a public domain or an internet-facing deployment.
+This is the recommended way to develop and test the website **on your own computer**, without Docker, a VM, a public domain, or an internet-facing deployment.
 
-Prerequisites: Git, Python 3 and a modern browser.
+Prerequisites: Git, Python 3, and a modern browser.
 
 1. Clone the repository and enter its directory:
 
@@ -58,81 +98,45 @@ Prerequisites: Git, Python 3 and a modern browser.
 
 Press `Ctrl+C` to stop the server. Binding to `127.0.0.1` limits access to the local computer.
 
-## Run on the VM with Docker
+## Run with Docker
 
-The Univates VM hosts the **production** environment, separately from local development.
+Running with Docker reproduces the static container used in production behind the shared reverse proxy (**https://techpro.matbdev.com**).
 
-Prerequisites: Git, Docker Engine and Docker Compose installed on the VM, permission to execute Docker commands, a domain pointing to the VM, and access to ports 80/443 as required by the network configuration.
+Prerequisites: Git, a running Docker Engine, and Docker Compose installed, with permission to execute Docker commands.
 
-1. Clone the repository on the VM:
+1. Clone the repository and enter its directory, as shown in step 1 above.
+2. If the external `deadlock_edge` network does not exist yet in your Docker environment, create it once:
 
    ```bash
-   git clone https://github.com/univates-deadlock/techpro-institutional-page.git
-   cd techpro-institutional-page
+   docker network inspect deadlock_edge >/dev/null 2>&1 || docker network create deadlock_edge
    ```
 
-2. Build the image and start the service:
+3. Build the image and start the service in the background:
 
    ```bash
    docker compose up -d --build
    ```
 
-3. Access the deployed website: **https://techpro.matbdev.com**.
-
-4. Check service status and logs:
+4. Check service status, logs, and the local HTTP response:
 
    ```bash
    docker compose ps
    docker compose logs -f web
-   ```
-
-5. Check the HTTP response directly on the VM:
-
-   ```bash
    curl -I http://127.0.0.1:8080/pages/home.html
    ```
 
-### Ports and security
+### Ports and networking
 
-The recommended production port mapping in `compose.yaml` is:
+In `compose.yaml`, the service operates as follows:
 
-```yaml
-ports:
-  - "80:80"
-  - "443:443"
-  - "127.0.0.1:8080:8080"
-```
+- **`127.0.0.1:8080:8080`:** HTTP access restricted to the host's `localhost` for local testing and health checks. Port `8080` is not publicly exposed.
+- **`deadlock_edge` network (`techpro-site:8080`):** lets the central reverse proxy route public HTTPS traffic (`https://techpro.matbdev.com`, ports `80`/`443`) to this container without host port conflicts.
 
-- **80/TCP:** HTTP, HTTPS redirection and certificate validation support.
-- **443/TCP:** public HTTPS access to the website.
-- **8080/TCP:** HTTP access restricted to the VM's localhost, used by the deployment health check.
-
-The `:8080` block stays in the `Caddyfile`: exposure on the VM is limited by Docker Compose's `127.0.0.1:8080:8080` mapping. Port 8080 **does not need to be publicly accessible**.
-
-To manually apply changes to the container, run `docker compose up -d --build` again. To stop and remove the container:
+To apply file changes, run `docker compose up -d --build` again. To stop and remove the container:
 
 ```bash
 docker compose down
 ```
-
-Caddy's named volumes are preserved by this command.
-
-## Automated deployment
-
-The [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) file defines deployment automation using GitHub Actions.
-
-The workflow runs on a **push to `main`** or can be started manually through **Run workflow** in GitHub.
-
-Deployment flow:
-
-1. The Action configures SSH using the `VM_HOST`, `VM_USER`, `VM_PORT`, `VM_SSH_KEY` and `VM_KNOWN_HOSTS` secrets.
-2. It connects to the VM and opens `$HOME/techpro-institutional-page`.
-3. It updates the main branch with `git pull --ff-only origin main`.
-4. It validates the Compose configuration and runs `docker compose up -d --build` on the VM itself.
-5. It checks the availability of `/pages/home.html` by requesting `http://127.0.0.1:8080`.
-6. It records diagnostic information on failure and cleans up unused Docker images at the end.
-
-This implements automated **Continuous Deployment (CD)**, but does not run a complete continuous integration (CI) test suite. The health check confirms a valid HTTP response; it does not replace functional testing, and the workflow does not implement automatic rollback.
 
 ---
 
